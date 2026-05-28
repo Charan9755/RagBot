@@ -7,6 +7,8 @@ langchain-text-splitters
 pandas
 numpy
 python-dotenv
-PyPDF2
+PyPDF
 python-docx
 docx2txt
+DirectoryLoader
+PyPDFLoader
