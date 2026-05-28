@@ -11,7 +11,6 @@ Notes:
 - Optionally uses Ollama if available for LLM-based answer generation. You can also plug in an OpenAI LLM implementation if desired.
 """
 
-import os
 import re
 import streamlit as st
 from pathlib import Path
@@ -128,16 +127,18 @@ Question:
 # Streamlit UI
 # -----------------------------
 
+project_root = Path(__file__).resolve().parent
+
 st.set_page_config(page_title="RAG Q&A", layout="wide")
 st.title("RAG Q&A — Retrieval-Augmented Generation (local)")
 
 # Sidebar config
 st.sidebar.header("Configuration 🔧")
-base_dir = st.sidebar.text_input("Document folder", value=os.path.join(os.getcwd(), "pdf_data"))
+base_dir = st.sidebar.text_input("Document folder", value=str(project_root / "pdf_data"))
 chunk_size = st.sidebar.number_input("Chunk size", min_value=200, max_value=4000, value=1000, step=100)
 chunk_overlap = st.sidebar.number_input("Chunk overlap", min_value=0, max_value=500, value=100, step=10)
 emb_model = st.sidebar.text_input("Embeddings model", value="sentence-transformers/all-MiniLM-L6-v2")
-index_folder = st.sidebar.text_input("FAISS index folder", value="faiss_index")
+index_folder = st.sidebar.text_input("FAISS index folder", value=str(project_root / "faiss_index"))
 use_ollama = st.sidebar.checkbox("Use Ollama LLM (if available)", value=_OLLAMA_AVAILABLE)
 k = st.sidebar.slider("Retriever k (num docs)", 1, 10, 3)
 
